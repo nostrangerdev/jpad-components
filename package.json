@@ -1,0 +1,23 @@
+{
+  "name": "jpad-components",
+  "description": "A set of web-components to build declarative virtual gamepad layouts",
+  "license": "MIT",
+  "author": "NoStranger",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./jpad-controller.js": "./jpad-controller.js",
+    "./jpad-trackpad.js": "./jpad-trackpad.js",
+    "./jpad-button.js": "./jpad-button.js",
+    "./jpad-tile.js": "./jpad-tile.js"
+  },
+  "scripts": {
+    "analyze": "npx @custom-elements-manifest/analyzer analyze",
+    "analyze:watch": "npx @custom-elements-manifest/analyzer analyze --watch",
+    "start": "npx servor . index.html 3000 --reload"
+  },
+  "customElements": "custom-elements.json"
+}

@@ -1,0 +1,936 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "index.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "jpad-button.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A button input element, it can be used standalone or with a controller.\n\nYou can also use it with a jpad-tile to contruct more complex layouts easily.\n\nIt supports inputs from touchscreen, mouse and keyboard.",
+          "name": "JpadButton",
+          "cssProperties": [
+            {
+              "description": "The button outer padding",
+              "name": "--JpadButton-padding",
+              "default": ".2em"
+            },
+            {
+              "description": "The button border radius",
+              "name": "--JpadButton-borderRadius",
+              "default": "50%"
+            },
+            {
+              "description": "The button minimum size",
+              "name": "--JpadButton-minSize",
+              "default": "2em"
+            },
+            {
+              "description": "The button default state background",
+              "name": "--JpadButton-background",
+              "default": "rgba(150, 150, 150, .6)"
+            },
+            {
+              "description": "The button active state background",
+              "name": "--JpadButton-active-background",
+              "default": "rgba(150, 150, 150, .8)"
+            },
+            {
+              "description": "The button trigger variant padding",
+              "name": "--JpadButton-trigger-padding",
+              "default": ".2em 1.5em"
+            },
+            {
+              "description": "The button trigger variant border radius",
+              "name": "--JpadButton-trigger-borderRadius",
+              "default": ".5em"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "Style the button",
+              "name": "button"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for displaying a button label",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "#listeningKeys",
+              "privacy": "private",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "#pressedKeys",
+              "privacy": "private",
+              "type": {
+                "text": "object"
+              },
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "#parentEl",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleTouchStart",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleTouchEnd",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleMouseStart",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleMouseEnd",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleOuterTouchMove",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleOuterMouseDown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleOuterMouseEnter",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleOuterMouseUp",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleKeyPress",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "The name of the button's action",
+              "type": {
+                "text": "string"
+              },
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "active",
+              "description": "This property is enabled when the button is pressed",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "passby",
+              "description": "When enabled the element detect touches from outside and by sliding over it, works best when used with a dedicated wrapping element like jpad-tile",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "buttonpress",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the button is pressed"
+            },
+            {
+              "name": "buttontrigger",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the button is pressed or released, includes pressed state"
+            },
+            {
+              "name": "buttonrelease",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the button is released"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "description": "reflected attribute of property 'name'"
+            },
+            {
+              "name": "key",
+              "type": {
+                "text": "string"
+              },
+              "description": "Alias of 'keys'"
+            },
+            {
+              "name": "keys",
+              "type": {
+                "text": "string"
+              },
+              "description": "A comma-separated list of the 'KeyboardEvent.code' to listen for"
+            },
+            {
+              "name": "passby",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "reflected attribute of property 'passby'"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "reflected attribute of property 'active'",
+              "name": "active"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Display the button with a wider variant for alternative types like L or R trigger buttons",
+              "name": "trigger"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "jpad-button",
+          "summary": "A button input element.",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JpadButton",
+          "declaration": {
+            "name": "JpadButton",
+            "module": "jpad-button.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jpad-button",
+          "declaration": {
+            "name": "JpadButton",
+            "module": "jpad-button.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "jpad-controller.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Hold children layout and a minimal public API for its children elements.\n\nBy using directly it you can build a standalone controller for any project,\nwithout the need to manually manage each element by their events.",
+          "name": "JpadController",
+          "cssProperties": [
+            {
+              "description": "Controls the outer padding",
+              "name": "--JpadController-padding",
+              "default": "1em"
+            },
+            {
+              "description": "Controls the inner spacing",
+              "name": "--JpadController-gap",
+              "default": ".5em"
+            },
+            {
+              "description": "Controls the element background",
+              "name": "--JpadController-background",
+              "default": "transparent"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "Style the Top quadrant",
+              "name": "top"
+            },
+            {
+              "description": "Style the Top-left quadrant",
+              "name": "top-left"
+            },
+            {
+              "description": "Style the Top-right quadrant",
+              "name": "top-right"
+            },
+            {
+              "description": "Style the Center quadrant",
+              "name": "center"
+            },
+            {
+              "description": "Style the Left quadrant",
+              "name": "left"
+            },
+            {
+              "description": "Style the Right quadrant",
+              "name": "right"
+            },
+            {
+              "description": "Style the Bottom quadrant",
+              "name": "bottom"
+            },
+            {
+              "description": "Style the Bottom-left quadrant",
+              "name": "bottom-left"
+            },
+            {
+              "description": "Style the Bottom-right quadrant",
+              "name": "bottom-right"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default centered slot",
+              "name": ""
+            },
+            {
+              "description": "Show elements above the left slots",
+              "name": "top-left"
+            },
+            {
+              "description": "Show elements above the default slot",
+              "name": "top"
+            },
+            {
+              "description": "Show elements above the right slots",
+              "name": "top-right"
+            },
+            {
+              "description": "Show elements to the left",
+              "name": "left"
+            },
+            {
+              "description": "Show elements to the right",
+              "name": "right"
+            },
+            {
+              "description": "Show elements below the left slots",
+              "name": "bottom-left"
+            },
+            {
+              "description": "Show elements below the default slot",
+              "name": "bottom"
+            },
+            {
+              "description": "Show elements below the right slots",
+              "name": "bottom-right"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "#trackpads",
+              "privacy": "private",
+              "type": {
+                "text": "object"
+              },
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "#buttons",
+              "privacy": "private",
+              "type": {
+                "text": "object"
+              },
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "#handleTrackpadMove",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleButtonTrigger",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getAxis",
+              "parameters": [
+                {
+                  "name": "name",
+                  "description": "The axis name",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Get a trackpad axis by its defined name.",
+              "return": {
+                "type": {
+                  "text": "{ x: number, y: number }"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "isPressed",
+              "parameters": [
+                {
+                  "name": "name",
+                  "description": "The button or trackpad name",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Get a button press state by its defined name.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "isJustPressed",
+              "parameters": [
+                {
+                  "name": "name",
+                  "description": "The button or trackpad name",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Get a button press state by its defined name.\n\nIt return true only on the first call until is pressed again.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "\"always\"|\"portrait\"|\"landscape\""
+              },
+              "description": "Whether to expand the inner area. Good for handling wide screens.",
+              "name": "expanded"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "jpad-controller",
+          "summary": "Interact with children elements while providing a minimal public API",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JpadController",
+          "declaration": {
+            "name": "JpadController",
+            "module": "jpad-controller.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jpad-controller",
+          "declaration": {
+            "name": "JpadController",
+            "module": "jpad-controller.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "jpad-tile.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Provides a simple layout to display children elements in a two level grid that can be tilted.\n\nUseful for building common types of layouts.",
+          "name": "JpadTile",
+          "cssProperties": [
+            {
+              "description": "Controls the row direction",
+              "name": "--JpadTile-row-flexDirection",
+              "default": "row"
+            },
+            {
+              "description": "Controls the row gap",
+              "name": "--JpadTile-row-gap",
+              "default": "0"
+            },
+            {
+              "description": "Controls the diagonal padding",
+              "name": "--JpadTile-diagonal-padding",
+              "default": "1em 0"
+            },
+            {
+              "description": "Controls the diagonal rotation angle",
+              "name": "--JpadTile-diagonal-rotationAngle",
+              "default": "45deg"
+            },
+            {
+              "description": "Controls the slanted padding",
+              "name": "--JpadTile-slanted-padding",
+              "default": ".5em 0"
+            },
+            {
+              "description": "Controls the slanted rotation angle",
+              "name": "--JpadTile-slanted-rotationAngle",
+              "default": "5deg"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "Style the wrapping container",
+              "name": "tile"
+            },
+            {
+              "description": "Style the primary row",
+              "name": "primary"
+            },
+            {
+              "description": "Style the secondary row",
+              "name": "secondary"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Primary row of elements",
+              "name": ""
+            },
+            {
+              "description": "Secondary row of elements",
+              "name": "secondary"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "#preventEvent",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "diagonal",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to tilt the element diagonally (Like a PlayStation controller)"
+            },
+            {
+              "name": "slanted",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to tilt the element lightly (like a Sega Mega Drive controller)"
+            },
+            {
+              "name": "reverse",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to invert the tilt direction"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "jpad-tile",
+          "summary": "Hold children elements in a configurable layout.",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JpadTile",
+          "declaration": {
+            "name": "JpadTile",
+            "module": "jpad-tile.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jpad-tile",
+          "declaration": {
+            "name": "JpadTile",
+            "module": "jpad-tile.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "jpad-trackpad.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A directional input element, it can be used standalone or with a controller.\n\nThe trackpad element is designed to normalize the vector output for immediate usage without trasformations.\n\nIt supports inputs from touchscreen, mouse and keyboard.",
+          "name": "JpadTrackpad",
+          "cssProperties": [
+            {
+              "description": "The trackpad outer padding",
+              "name": "--JpadTrackpad-padding",
+              "default": ".2em"
+            },
+            {
+              "description": "The trackpad size",
+              "name": "--JpadTrackpad-size",
+              "default": "6em"
+            },
+            {
+              "description": "The trackpad border",
+              "name": "--JpadTrackpad-border",
+              "default": ".2em solid rgba(150, 150, 150, .6)"
+            },
+            {
+              "description": "The trackpad border radius",
+              "name": "--JpadTrackpad-borderRadius",
+              "default": "50%"
+            },
+            {
+              "description": "The trackpad background",
+              "name": "--JpadTrackpad-background",
+              "default": "transparent"
+            },
+            {
+              "description": "The trackpad indicator size",
+              "name": "--JpadTrackpad-indicator-size",
+              "default": "50%"
+            },
+            {
+              "description": "The trackpad indicator border radius",
+              "name": "--JpadTrackpad-indicator-borderRadius",
+              "default": "50%"
+            },
+            {
+              "description": "The trackpad indicator background",
+              "name": "--JpadTrackpad-indicator-background",
+              "default": "rgba(150, 150, 150, .6)"
+            },
+            {
+              "description": "The trackpad indicator transition duration when moving",
+              "name": "--JpadTrackpad-indicator-transitionDuration",
+              "default": ".05s"
+            },
+            {
+              "description": "The active trackpad active state border",
+              "name": "--JpadTrackpad-active-border",
+              "default": ".2em solid rgba(150, 150, 150, .6)"
+            },
+            {
+              "description": "The trackpad active state background",
+              "name": "--JpadTrackpad-active-background",
+              "default": "transparent"
+            },
+            {
+              "description": "The trackpad indicator active state background",
+              "name": "--JpadTrackpad-active-indicator-background",
+              "default": "rgba(150, 150, 150, .8)"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "Style the trackpad",
+              "name": "trackpad"
+            },
+            {
+              "description": "Style the indicator",
+              "name": "indicator"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "#trackingTouchIdentifier",
+              "privacy": "private",
+              "type": {
+                "text": "null"
+              },
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "#listenedDirectionKeys",
+              "privacy": "private",
+              "type": {
+                "text": "object"
+              },
+              "default": "{\n            up: [],\n            down: [],\n            left: [],\n            right: [],\n        }"
+            },
+            {
+              "kind": "field",
+              "name": "#pressedKeys",
+              "privacy": "private",
+              "type": {
+                "text": "object"
+              },
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "#trackpadEl",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#indicatorEl",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleTouchStart",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleTouchMove",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleTouchEnd",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleMouseStart",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleMouseMove",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleMouseEnd",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#handleKeyPress",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "description": "The name of the trackpad's action",
+              "type": {
+                "text": "string"
+              },
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "active",
+              "description": "This property is enabled when the trackpad is pressed",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "normalize",
+              "description": "When enabled the axis is normalized, that means the distance from the center is constant to 1",
+              "reflects": true,
+              "type": {
+                "text": "boolean"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "trackpadpress",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the trackpad is pressed, includes axis"
+            },
+            {
+              "name": "trackpadmove",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the trackpad is dragged or moved, includes axis"
+            },
+            {
+              "name": "trackpadrelease",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the trackpad is released, includes axis"
+            },
+            {
+              "name": "buttonpress",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the trackpad is pressed"
+            },
+            {
+              "name": "buttontrigger",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the trackpad is pressed or released, includes pressed state"
+            },
+            {
+              "name": "buttonrelease",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the trackpad is released"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "description": "reflected attribute of property 'name'"
+            },
+            {
+              "name": "normalize",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "reflected attribute of property 'normalize'"
+            },
+            {
+              "name": "upkey",
+              "type": {
+                "text": "string"
+              },
+              "description": "Alias of 'upkeys'"
+            },
+            {
+              "name": "upkeys",
+              "type": {
+                "text": "string"
+              },
+              "description": "A comma-separated list of the 'KeyboardEvent.code' to listen for"
+            },
+            {
+              "name": "downkey",
+              "type": {
+                "text": "string"
+              },
+              "description": "Alias of 'downkeys'"
+            },
+            {
+              "name": "downkeys",
+              "type": {
+                "text": "string"
+              },
+              "description": "A comma-separated list of the 'KeyboardEvent.code' to listen for"
+            },
+            {
+              "name": "leftkey",
+              "type": {
+                "text": "string"
+              },
+              "description": "Alias of 'leftkeys'"
+            },
+            {
+              "name": "leftkeys",
+              "type": {
+                "text": "string"
+              },
+              "description": "A comma-separated list of the 'KeyboardEvent.code' to listen for"
+            },
+            {
+              "name": "rightkey",
+              "type": {
+                "text": "string"
+              },
+              "description": "Alias of 'rightkeys'"
+            },
+            {
+              "name": "rightkeys",
+              "type": {
+                "text": "string"
+              },
+              "description": "A comma-separated list of the 'KeyboardEvent.code' to listen for"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "reflected attribute of property 'active'",
+              "name": "active"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "jpad-trackpad",
+          "summary": "A directional input element.",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "JpadTrackpad",
+          "declaration": {
+            "name": "JpadTrackpad",
+            "module": "jpad-trackpad.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "jpad-trackpad",
+          "declaration": {
+            "name": "JpadTrackpad",
+            "module": "jpad-trackpad.js"
+          }
+        }
+      ]
+    }
+  ]
+}
