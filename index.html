@@ -1,0 +1,273 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <title>Jpad Components</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+        <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+        <script type="module" src="https://jspm.dev/@api-viewer/demo"></script>
+        <script type="module" src="./index.js"></script>
+    </head>
+    <body>
+        <style>
+            * { box-sizing: border-box; }
+
+            body {
+                font-family: system-ui, sans-serif;
+                line-height: 1.5;
+                margin: 0;
+                background: #eee;
+                color: #555;
+            }
+
+            header, footer {
+                text-align: center;
+                margin-block: 2em;
+                text-wrap: balance;
+            }
+
+            header {
+                font-size: 1.5em;
+            }
+
+            footer {
+                font-size: 1.2em;
+            }
+
+            h1, h2 {
+                font-family: monospace;
+                color: #333;
+            }
+
+            h2 {
+                margin-block-start: 3em;
+            }
+
+            .container {
+                padding-inline: 1rem;
+                margin-inline: auto;
+                width: 100%;
+                max-width: 45rem;
+            }
+
+            .heading {
+                display: inline-block;
+                background: #ddd;
+                padding: .5rem 2rem;
+                border-radius: .5rem;
+                line-height: 1.2;
+            }
+
+            .live-example {
+                background: #fff;
+                border-radius: 1em;
+                box-shadow: 0 .2em 1em #0005;
+            }
+            .live-example::part(bottom-left) {
+                justify-content: flex-end;
+            }
+
+            .live-example::part(bottom-right) {
+                justify-content: flex-start;
+            }
+        </style>
+
+        <header>
+            <div class="container">
+                <h1 class="heading">&lt;jpad-components&gt;</h1>
+                <p>A set of web-components to build declarative virtual gamepad layouts</p>
+            </div>
+
+            <p>
+                View project on 
+                <a href="https://github.com/nostrangerdev/jpad-components">GitHub</a>
+                or
+                <a href="https://github.com/nostrangerdev/jpad-components">npm</a>
+            </p>
+            <p>
+                <img alt="NPM Version" src="https://img.shields.io/npm/v/jpad-components">
+                <img alt="GitHub License" src="https://img.shields.io/github/license/nostrangerdev/jpad-components">
+            </p>
+        </header>
+
+        <main class="container">
+            <h2>Intro</h2>
+
+            <p>The aim of this project is to enable rapid prototyping and to provide a simple way of implementing touch / keyboard inputs without having to write custom UI code.</p>
+
+            <p>The jpad-components are designed to work with any framework and game engine, you can use the <code>jpad-controller</code> API directly in your game loop or listen to the controller, trackpad or button events as needed.</p>
+
+            <h2 id="demo">Live demo</h2>
+
+            <p>Try it yourself.</p>
+
+            <jpad-controller class="live-example">
+                <jpad-button trigger slot="top-left">L</jpad-button>
+                <jpad-button trigger slot="top-right">R</jpad-button>
+
+                <jpad-tile diagonal slot="left">
+                    <jpad-button passby>S</jpad-button>
+                    <jpad-button passby>D</jpad-button>
+                    <jpad-button passby slot="secondary">A</jpad-button>
+                    <jpad-button passby slot="secondary">W</jpad-button>
+                </jpad-tile>
+
+                <jpad-tile diagonal slot="right">
+                    <jpad-button passby>A</jpad-button>
+                    <jpad-button passby>B</jpad-button>
+                    <jpad-button passby slot="secondary">X</jpad-button>
+                    <jpad-button passby slot="secondary">Y</jpad-button>
+                </jpad-tile>
+
+                <jpad-trackpad slot="bottom-left"></jpad-trackpad>
+                <jpad-trackpad slot="bottom-right"></jpad-trackpad>
+            </jpad-controller>
+
+            <h2>Installation</h2>
+
+            <p>jpad-components is available on <a href="https://www.npmjs.com/package/jpad-components">npm</a>:</p>
+
+<pre><code class="hljs language-sh">npm <span class="hljs-selector-tag">i</span> jpad-components
+</code></pre><h2>Usage</h2>
+
+            <p>Import the components separately or as a bundle:</p>
+
+<pre><code class="hljs language-js"><span class="hljs-comment">// import as a bundle</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'jpad-components'</span>; <span class="hljs-comment">// Load all elements in one go</span>
+
+<span class="hljs-comment">// or just the components you need</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'jpad-components/jpad-controller.js'</span>; <span class="hljs-comment">// Layout controller and simple API</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'jpad-components/jpad-tile.js'</span>; <span class="hljs-comment">// Create familiar button layouts</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'jpad-components/jpad-button.js'</span>; <span class="hljs-comment">// Handle input as a button or trigger</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'jpad-components/jpad-trackpad.js'</span>; <span class="hljs-comment">// Handle movement in any direction</span>
+</code></pre><pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- available on CDN too --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  ...
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://esm.run/jpad-components"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"module"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+</code></pre><p>The components API is <a href="https://nostrangerdev.github.io/jpad-components#docs">documented here</a>.</p>
+
+            <p>Here's a minimal example:</p>
+
+            <jpad-controller class="live-example">
+                <jpad-trackpad
+                    name="movement"
+                    upkeys="ArrowUp, KeyW"
+                    downkeys="ArrowDown, KeyS"
+                    leftkeys="ArrowLeft, KeyA"
+                    rightkeys="ArrowRight, KeyD"
+                    slot="left"
+                ></jpad-trackpad>
+
+                <jpad-tile slot="right">
+                    <jpad-button passby name="jump" keys="Z">Z</jpad-button>
+                    <jpad-button passby name="attack" keys="X">X</jpad-button>
+                </jpad-button>
+            </jpad-controller>
+
+            <pre><code class="hljs language-html"><span class="hljs-comment">&lt;!-- Define the layout --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">jpad-controller</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">jpad-trackpad</span>
+      <span class="hljs-attr">name</span>=<span class="hljs-string">"movement"</span>
+      <span class="hljs-attr">upkeys</span>=<span class="hljs-string">"ArrowUp, KeyW"</span>
+      <span class="hljs-attr">downkeys</span>=<span class="hljs-string">"ArrowDown, KeyS"</span>
+      <span class="hljs-attr">leftkeys</span>=<span class="hljs-string">"ArrowLeft, KeyA"</span>
+      <span class="hljs-attr">rightkeys</span>=<span class="hljs-string">"ArrowRight, KeyD"</span>
+      <span class="hljs-attr">slot</span>=<span class="hljs-string">"left"</span>
+    &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jpad-trackpad</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">jpad-tile</span> <span class="hljs-attr">slot</span>=<span class="hljs-string">"right"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">jpad-button</span> <span class="hljs-attr">passby</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"jump"</span> <span class="hljs-attr">keys</span>=<span class="hljs-string">"Z"</span>&gt;</span>Z<span class="hljs-tag">&lt;/<span class="hljs-name">jpad-button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">jpad-button</span> <span class="hljs-attr">passby</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"attack"</span> <span class="hljs-attr">keys</span>=<span class="hljs-string">"X"</span>&gt;</span>X<span class="hljs-tag">&lt;/<span class="hljs-name">jpad-button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">jpad-button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">jpad-controller</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+  <span class="hljs-comment">// Get the element</span>
+  <span class="hljs-keyword">const</span> jpad = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">'jpad-controller'</span>);
+
+  <span class="hljs-comment">// Use it with the input api</span>
+  jpad.<span class="hljs-title function_">getAxis</span>(<span class="hljs-string">'movement'</span>);
+  jpad.<span class="hljs-title function_">isPressed</span>(<span class="hljs-string">'attack'</span>);
+  jpad.<span class="hljs-title function_">isJustPressed</span>(<span class="hljs-string">'attack'</span>);
+
+  <span class="hljs-comment">// You can also listen for the events</span>
+  jpad.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'buttontrigger'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(e.<span class="hljs-property">detail</span>.<span class="hljs-property">name</span>, e.<span class="hljs-property">detail</span>.<span class="hljs-property">pressed</span>);
+  });
+  jpad.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">'trackpadmove'</span>, <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(e.<span class="hljs-property">detail</span>.<span class="hljs-property">name</span>, e.<span class="hljs-property">detail</span>.<span class="hljs-property">axis</span>);
+  });
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+
+            <h2 id="docs">Components docs & demos</h2>
+
+            <api-viewer src="./custom-elements.json" exclude-knobs="active,passby">
+                <template data-element="jpad-controller" data-target="suffix">
+                    <style>
+                        /* Styles for showing the areas */
+                        jpad-controller::part(top),
+                        jpad-controller::part(top-left),
+                        jpad-controller::part(top-right),
+                        jpad-controller::part(center),
+                        jpad-controller::part(left),
+                        jpad-controller::part(right),
+                        jpad-controller::part(bottom),
+                        jpad-controller::part(bottom-left),
+                        jpad-controller::part(bottom-right) {
+                            background: #ddd;
+                            padding: 1em;
+                        }
+                    </style>
+                </template>
+                <template data-element="jpad-controller" data-target="knob" data-attr="expanded" data-type="select">
+                    <select>
+                        <option value="---"></option>
+                        <option value="always">Always</option>
+                        <option value="portrait">Portrait</option>
+                        <option value="landscape">Landscape</option>
+                    </select>
+                </template>
+
+                <template data-element="jpad-tile" data-target="slot">
+                    <jpad-button>A</jpad-button>
+                    <jpad-button>B</jpad-button>
+                    <jpad-button slot="secondary">X</jpad-button>
+                    <jpad-button slot="secondary">Y</jpad-button>
+                </template>
+
+                <template data-element="jpad-button" data-target="slot">
+                    A
+                </template>
+            </api-viewer>
+
+            <h2>Example in the wild</h2>
+
+            <p>Here's some demos that use <code>jpad-components</code> to handle their inputs:</p>
+
+            <ul>
+                <li><a href="https://codepen.io/nostranger/pen/abxzVKy" target="_blank">Playable CSS 3D Drone</a></li>
+            </ul>
+
+            <h2>License</h2>
+
+            <p>This project is released under the <a href="https://github.com/nostrangerdev/jpad-components/blob/main/LICENSE">MIT license</a>.</p>
+
+            <h2>Contributions</h2>
+
+            <p>Any contribution or feedback is warmly welcomed, this project has been tested on a limited set of devices and browsers and might display some bugs.</p>
+
+            <h2>If you need support or found a bug</h2>
+
+            <p>If you need and help or have found a bug, feel free to <a href="https://github.com/nostrangerdev/jpad-components/issues">leave an issue</a> or <a href="https://njump.me/nostranger@nostrcheck.me">DM me on Nostr</a>.</p>            
+
+        </main>
+
+        <footer>
+            <div class="container">
+                Made by <a href="https://nosta.me/nostranger@nostrcheck.me" target="_blank">@NoStranger</a>
+            </div>
+        </footer>
+    </body>
+</html>
