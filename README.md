@@ -59,7 +59,7 @@ Here's a minimal example:
     <jpad-tile slot="right">
       <jpad-button passby name="jump" keys="Z">Z</jpad-button>
       <jpad-button passby name="attack" keys="X">X</jpad-button>
-    </jpad-button>
+    </jpad-tile>
 </jpad-controller>
 
 <script>
