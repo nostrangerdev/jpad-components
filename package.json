@@ -3,7 +3,7 @@
   "description": "A set of web-components to build declarative virtual gamepad layouts",
   "license": "MIT",
   "author": "NoStranger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://nostrangerdev.github.io/jpad-components/",
   "repository": "github:nostrangerdev/jpad-components",
   "bugs": {
@@ -11,8 +11,8 @@
     "email": "nostrangerdev@proton.me"
   },
   "funding": {
-    "type" : "individual",
-    "url" : "https://getalby.com/p/nostranger"
+    "type": "individual",
+    "url": "https://getalby.com/p/nostranger"
   },
   "type": "module",
   "main": "index.js",
