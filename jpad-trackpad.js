@@ -13,6 +13,8 @@ const html = String.raw;
  *
  * @attribute {string} name - reflected attribute of property 'name'
  *
+ * @attribute {boolean} dpad - reflected attribute of property 'dpad'
+ *
  * @attribute {boolean} normalize - reflected attribute of property 'normalize'
  *
  * @attribute {boolean} active - reflected attribute of property 'active'
@@ -68,6 +70,7 @@ export class JpadTrackpad extends HTMLElement {
     static get observedAttributes() {
         return [
             'name',
+            'dpad',
             'normalize',
             'upkey', 'upkeys',
             'downkey', 'downkeys',
@@ -330,6 +333,19 @@ export class JpadTrackpad extends HTMLElement {
     }
 
     /**
+     * When enabled the axis act like a dpad, that means the directions are snapped to 8-directions
+     * @reflect
+     * @type {boolean}
+     */
+    get dpad() {
+        return this.hasAttribute('dpad');
+    }
+
+    set dpad(value) {
+        this.toggleAttribute('dpad', value);
+    }
+
+    /**
      * @internal
      */
     #updateTouchStartPosition(pointer) {
@@ -402,12 +418,24 @@ export class JpadTrackpad extends HTMLElement {
      * @internal
      */
     #normalizePosition(pos, radius) {
-        if (this.normalize) {
-            return this.#normalizeLength(pos);
-        }
+        if (this.normalize && this.dpad) return this.#snapToDpad(pos);
+
+        if (this.normalize) return this.#normalizeLength(pos);
+
+        if (this.dpad) return this.#normalizeDpadPosition(pos, radius);
+
+        return this.#getClampedPosition(pos, radius);
+    }
+
+    #normalizeDpadPosition(pos, radius) {
+        const dpadAxis = this.#snapToDpad(pos);
+
+        const axis = this.#getClampedPosition(pos, radius);
+        const distance = this.#getPositionLength(axis);
+
         return {
-            x: this.#normalizeAxis(pos.x, radius),
-            y: this.#normalizeAxis(pos.y, radius),
+            x: dpadAxis.x * distance,
+            y: dpadAxis.y * distance,
         };
     }
 
@@ -425,10 +453,32 @@ export class JpadTrackpad extends HTMLElement {
     /**
      * @internal
      */
-    #normalizeAxis(axis, radius) {
+    #getClampedPosition(pos, radius) {
+        return {
+            x: this.#clampAxis(pos.x, radius),
+            y: this.#clampAxis(pos.y, radius),
+        };
+    }
+
+    /**
+     * @internal
+     */
+    #clampAxis(axis, radius) {
         const min = -radius;
         const max = radius;
         return 2 * ((axis - min) / (max - min)) - 1;
+    }
+
+    /**
+     * @internal
+     */
+    #snapToDpad(pos) {
+        const normPos = this.#normalizeLength(pos);
+        const axis = {
+            x: Math.round(normPos.x),
+            y: Math.round(normPos.y),
+        };
+        return this.#normalizeLength(axis);
     }
 
     /**

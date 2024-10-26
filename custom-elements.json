@@ -698,7 +698,7 @@
               "type": {
                 "text": "object"
               },
-              "default": "{\n            up: [],\n            down: [],\n            left: [],\n            right: [],\n        }"
+              "default": "{ up: [], down: [], left: [], right: [], }"
             },
             {
               "kind": "field",
@@ -780,6 +780,28 @@
               "type": {
                 "text": "boolean"
               }
+            },
+            {
+              "kind": "field",
+              "name": "dpad",
+              "description": "When enabled the axis act like a dpad, that means the directions are snapped to 8-directions",
+              "reflects": true,
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "#normalizeDpadPosition",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "pos"
+                },
+                {
+                  "name": "radius"
+                }
+              ]
             }
           ],
           "events": [
@@ -833,6 +855,13 @@
                 "text": "string"
               },
               "description": "reflected attribute of property 'name'"
+            },
+            {
+              "name": "dpad",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "reflected attribute of property 'dpad'"
             },
             {
               "name": "normalize",
